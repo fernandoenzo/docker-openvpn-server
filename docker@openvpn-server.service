@@ -1,0 +1,17 @@
+[Unit]
+Description=Docker OpenVPN Server container
+Requires=docker.service
+PartOf=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+TimeoutStartSec=infinity
+ExecStartPre=/usr/bin/docker run -d -it --init --rm --net=host --cap-add=NET_ADMIN --device /dev/net/tun --name OpenVPN-Server --hostname OpenVPN-Server fernandoenzo/openvpn-server
+ExecStart=/usr/bin/docker logs -f OpenVPN-Server
+ExecStop=-/usr/bin/docker stop OpenVPN-Server
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
+
