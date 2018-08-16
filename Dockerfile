@@ -1,8 +1,6 @@
-FROM fernandoenzo/debian:10s-min
+FROM fernandoenzo/openvpn-client
 MAINTAINER Fernando Enzo Guarini (fernandoenzo@gmail.com)
 
-COPY static/gpg.conf /etc/skel/.gnupg/
-COPY static/dirmngr.conf /etc/skel/.gnupg/
 COPY ["static/openssl-sign-certs 1.0.1", "/usr/share/openssl-sign-certs/"]
 COPY static/parameters.ini /usr/share/openssl-sign-certs/
 

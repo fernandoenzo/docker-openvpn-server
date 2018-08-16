@@ -3,22 +3,14 @@
 set -e  # Exit immediately if a command exits with a non-zero status.
 set -x  # All executed commands are printed to the terminal
 
-aptitude update ; aptitude install -R -y gnupg gpgsm openvpn openssl
-mkdir /etc/openvpn/ccd /etc/openvpn/keys
+mkdir /etc/openvpn/ccd
 chmod 755 /etc/openvpn/ccd
-chmod 700 /etc/openvpn/keys
-openvpn --genkey --secret /etc/openvpn/keys/ta.key
 openssl dhparam -out /etc/openvpn/keys/dh2048.pem 2048
-chmod 400 /etc/openvpn/keys/ta.key /etc/openvpn/keys/dh2048.pem
-touch /etc/openvpn/keys/Server.key
-chmod 400 /etc/openvpn/keys/Server.key
-touch /etc/openvpn/CA.cer /etc/openvpn/Server.cer
-chmod 444 /etc/openvpn/CA.cer /etc/openvpn/Server.cer
-
-chmod 700 /etc/skel/.gnupg
-cp -r /etc/skel/.gnupg/ /root
+chmod 400 /etc/openvpn/keys/dh2048.pem
+mv /etc/openvpn/keys/Client.key /etc/openvpn/keys/Server.key
+mv /etc/openvpn/Client.cer /etc/openvpn/Server.cer
 
 ln -s "/usr/share/openssl-sign-certs/openssl-sign-certs 1.0.1" /usr/local/bin/openssl-sign-certs
 
 apt-get -y autoremove ; aptitude -y autoclean ; apt-get -y autoclean
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.aptitude /etc/openvpn/server /etc/openvpn/client
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.aptitude /etc/openvpn/server /etc/openvpn/client*
