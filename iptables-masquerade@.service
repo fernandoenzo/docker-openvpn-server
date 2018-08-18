@@ -1,0 +1,14 @@
+[Unit]
+Description=Apply masquerading in iptables for OpenVPN
+After=network.target
+Wants=network.target
+
+[Service]
+Type=oneshot
+ExecStart=-iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o %i -j MASQUERADE
+ExecStop=-iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o %i -j MASQUERADE
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
