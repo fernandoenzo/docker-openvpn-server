@@ -10,8 +10,6 @@ RUN bash /tmp/basics
 COPY static/server.conf /etc/openvpn/
 COPY static/PC-01 /etc/openvpn/ccd/
 
-COPY scripts/boot /usr/local/boot
-
 EXPOSE 1194
 EXPOSE 1194/udp
 
