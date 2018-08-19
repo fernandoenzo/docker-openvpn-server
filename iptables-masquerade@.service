@@ -1,5 +1,6 @@
 [Unit]
 Description=Apply masquerading in iptables for OpenVPN
+PartOf=docker@openvpn-server.service
 After=network.target
 Wants=network.target
 

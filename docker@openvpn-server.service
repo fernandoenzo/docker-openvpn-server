@@ -1,6 +1,6 @@
 [Unit]
 Description=Docker OpenVPN Server container
-Requires=docker.service
+Requires=docker.service iptables-masquerade@eth0.service
 PartOf=docker.service
 After=docker.service network-online.target
 Wants=network-online.target
