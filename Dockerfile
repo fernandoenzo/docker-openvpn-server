@@ -1,4 +1,4 @@
-FROM fernandoenzo/openvpn-client
+FROM ghcr.io/fernandoenzo/openvpn-client
 MAINTAINER Fernando Enzo Guarini (fernandoenzo@gmail.com)
 
 COPY ["static/openssl-sign-certs 1.0.1", "/usr/share/openssl-sign-certs/"]
