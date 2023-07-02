@@ -10,7 +10,7 @@ TimeoutStartSec=infinity
 ExecStartPre=/usr/bin/docker run -d -it --init --rm \
              --net=host --cap-add=NET_ADMIN --device /dev/net/tun \
              --name OpenVPN-Server --hostname OpenVPN-Server \
-             fernandoenzo/openvpn-server
+             ghcr.io/fernandoenzo/openvpn-server:latest
 ExecStart=/usr/bin/docker logs -f OpenVPN-Server
 ExecStop=-/usr/bin/docker stop OpenVPN-Server
 Restart=always
