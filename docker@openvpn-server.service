@@ -1,18 +1,19 @@
 [Unit]
 Description=Docker OpenVPN Server container
-Requires=docker.service iptables-masquerade@eth0.service
-PartOf=docker.service
+Requires=docker.service
 After=docker.service network-online.target
 Wants=network-online.target
 
 [Service]
 TimeoutStartSec=infinity
+ExecStartPre=-iptables -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j MASQUERADE
 ExecStartPre=/usr/bin/docker run -d -it --init --rm \
              --net=host --cap-add=NET_ADMIN --device /dev/net/tun \
              --name OpenVPN-Server --hostname OpenVPN-Server \
              ghcr.io/fernandoenzo/openvpn-server:latest
 ExecStart=/usr/bin/docker logs -f OpenVPN-Server
 ExecStop=-/usr/bin/docker stop OpenVPN-Server
+ExecStopPost=-iptables -t nat -D POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j MASQUERADE
 Restart=always
 SuccessExitStatus=143
 

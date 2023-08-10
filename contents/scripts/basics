@@ -3,14 +3,18 @@
 set -e  # Exit immediately if a command exits with a non-zero status.
 set -x  # All executed commands are printed to the terminal
 
+mkdir /usr/share/openssl-sign-certs
+cp /tmp/contents/static/openssl-sign-certs-1.0.1 /usr/share/openssl-sign-certs/
+cp /tmp/contents/static/parameters.ini /usr/share/openssl-sign-certs/
+ln -s "/usr/share/openssl-sign-certs/openssl-sign-certs 1.0.1" /usr/local/bin/openssl-sign-certs
+
 mkdir /etc/openvpn/ccd
 chmod 755 /etc/openvpn/ccd
-openssl dhparam -out /etc/openvpn/keys/dh2048.pem 2048
-chmod 400 /etc/openvpn/keys/dh2048.pem
+cp /tmp/contents/static/PC-01 /etc/openvpn/ccd/
+
+cp /tmp/contents/static/server.conf /etc/openvpn/
 mv /etc/openvpn/keys/Client.key /etc/openvpn/keys/Server.key
 mv /etc/openvpn/Client.cer /etc/openvpn/Server.cer
-
-ln -s "/usr/share/openssl-sign-certs/openssl-sign-certs 1.0.1" /usr/local/bin/openssl-sign-certs
 
 apt-get -y autoremove ; aptitude -y autoclean ; apt-get -y autoclean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.aptitude /etc/openvpn/server /etc/openvpn/client*

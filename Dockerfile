@@ -1,14 +1,8 @@
 FROM ghcr.io/fernandoenzo/openvpn-client
 
-COPY ["static/openssl-sign-certs 1.0.1", "/usr/share/openssl-sign-certs/"]
-COPY static/parameters.ini /usr/share/openssl-sign-certs/
+COPY contents/ /tmp/contents
+RUN bash /tmp/contents/scripts/basics
 
-COPY scripts/basics /tmp
-RUN bash /tmp/basics
-
-COPY static/server.conf /etc/openvpn/
-COPY static/PC-01 /etc/openvpn/ccd/
-
-EXPOSE 1194
+EXPOSE 1194/tcp
 EXPOSE 1194/udp
 
